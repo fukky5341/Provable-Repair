@@ -57,6 +57,30 @@ This command:
 - installs all dependencies from `pyproject.toml`
 - ensure the environment uses Python 3.12
 
+### 6. Install Datasets
+In our experiments, we use the following datasets:
+- CIFAR10
+- [MNIST-C](https://zenodo.org/records/3239543)
+- [CIFAR10-C](https://zenodo.org/records/2535967)
+- [GTSRB](https://www.kaggle.com/datasets/meowmeowmeowmeowmeow/gtsrb-german-traffic-sign)
+
+CIFAR10 is already included in the `torchvision` package, so you don't need to download it separately.
+
+For MNIST-C and CIFAR10-C, you can download the datasets by running the following commands:
+```
+mkdir data
+cd data
+
+# mnist-c
+wget https://zenodo.org/record/3239543/files/mnist_c.zip
+unzip mnist_c.zip
+
+# cifar10-c
+wget -O cifar10_c.tar https://zenodo.org/records/2535967/files/CIFAR-10-C.tar
+tar -xf cifar10_c.tar
+```
+For GTSRB, you can download the dataset from Kaggle. You need to create a Kaggle account and generate an API token. After downloading, make sure to rename the folder to `gtsrb` and place it in the `data` folder.
+
 
 
 ## Executing Experiments
