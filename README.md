@@ -123,12 +123,22 @@ You can switch the experiment by changing the `--exe-id` argument. We currently 
 - exe-id 4: (cifar-c, all)
 - exe-id 5: (gtsrb-c, all)
 
-where (model_name, pick) respectively corresponds to the model and the type of perturbation. As "ProRepair" experiments, we already set the perturbed dimensions to (5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20) in the code. You can change it by modifying the `ndims_list` variable in `test_prepared.py`. The number of perturbed boxes is already set to (1, 2, 3, 4, 5, 6, 8, 10, 12) for "mnist-f1" and "mnist-f2", (12, 14, 16, 18, 20) for "cifar-c", and (4, 6, 8, 10, 12) for "gtsrb-c" in the code. You can change it by modifying the `N_list` variable in `test_prepared.py`.
+where (model_name, pick) respectively corresponds to the model and the type of perturbation. As "ProRepair" experiments, we already set the perturbed dimensions to (5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20) in the code. You can change it by modifying the `ndims_list` variable in `test_prepared.py` (`test_lastlayer.py`). The number of perturbed boxes is already set to (1, 2, 3, 4, 5, 6, 8, 10, 12) for "mnist-f1" and "mnist-f2", (12, 14, 16, 18, 20) for "cifar-c", and (4, 6, 8, 10, 12) for "gtsrb-c" in the code. You can change it by modifying the `N_list` variable in `test_prepared.py` (`test_lastlayer.py`).
 
 ### MULAR (our method)
 ```
 uv run test.py --exe-id 0
 ```
+You can switch the experiment by changing the `--exe-id` argument. We currently support the following experiments:
+- exe-id 0: (mnist-f1, nonzero)
+- exe-id 1: (mnist-f1, all)
+- exe-id 2: (mnist-f2, nonzero)
+- exe-id 3: (mnist-f2, all)
+- exe-id 4: (cifar-c, all)
+- exe-id 5: (gtsrb-c, all)
+
+where (model_name, pick) respectively corresponds to the model and the type of perturbation. As experiments so far, we already set the perturbed dimensions to (5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20) in the code. You can change it by modifying the `ndims_list` variable in `test.py`. The number of perturbed boxes is already set to (1, 2, 3, 4, 5, 6, 8, 10, 12) for "mnist-f1" and "mnist-f2", (12, 14, 16, 18, 20) for "cifar-c", and (4, 6, 8, 10, 12) for "gtsrb-c" in the code. You can change it by modifying the `N_list` variable in `test.py`.
+
 
 
 ## Project Structure
