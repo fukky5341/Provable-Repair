@@ -1,0 +1,28 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# vscode settings
+.vscode/
+
+# gurobi log
+*.ilp
+*.lp
+
+# logs
+out.log
+log/
+result/
+result_analysis/figures/
+result_analysis/tables/
+result_analysis/result_analysis/
+repair_result/
+data/
+APRNN/results/

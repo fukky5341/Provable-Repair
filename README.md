@@ -1,1 +1,129 @@
-# Provable-Repair
+# MULAR
+
+## Table of Contents
+- [Installation Guide](#installation-guide)
+- [Executing Experiments](#executing-experiments)
+- 
+
+## Installation Guide
+### 1. [repository](https://anonymous.4open.science/r/Provable-Repair-2682) is in here. Clone it to your local machine.
+
+### 2. Install Gurobi (solver)
+
+Reproducing experiments requires a Gurobi license. Please install Gurobi from the official website: [gurobi installation](https://www.gurobi.com/). Free academic licenses for students and researchers [Gurobi academic license](https://www.gurobi.com/academia/academic-program-and-licenses) are provided if needed.
+
+Aside from the official instructions, the following steps might be helpful.
+
+- Login to the Gurobi user portal.
+- Go to the ["Licenses - Request" tab](https://portal.gurobi.com/iam/licenses/request), genearte a "WLS Academic" license if you don't have one. If you already have a "WLS Academic" license, you might get an "[LICENSES_ACADEMIC_EXISTS] Cannot create academic license as other academic licenses already exists" error.
+- Go to the "Home" tab, click "Licenses - Open the WLS manager" to open the WLS manager.
+- In the WLS manager, you should see a license under the "Licenses" tab. Click "extend" if it has expired (it might take some time to take effect).
+- Go to the "API Keys" tab, click the "CREATE API KEY" button to create a new license, download the generated `gurobi.lic` file by following the instructions and place it at the proper location.
+
+Before running the experiments, ensure that your Gurobi license is properly installed and gurobipy works in Python.
+
+
+### 3. Install uv (python environment manager)
+Please install by following guide: [uv installation](https://github.com/astral-sh/uv?tab=readme-ov-file#installation)
+
+The following command might be helpful for installation:
+
+- For macOS/Linux:
+```
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+- For Windows (PowerShell):
+```
+powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+After installation, ensure that `uv` command is available in your terminal. You might need to run the command shown in the output of the installation script.
+
+
+### 4. Setup python version
+The project requires Python 3.12. Please install and pin the version using uv:
+```
+uv python install 3.12
+cd [repository folder]
+uv python pin 3.12
+```
+
+### 5. Create uv environment and install dependencies
+```
+uv sync
+```
+This command:
+- creates a virtual environment (.venv)
+- installs all dependencies from `pyproject.toml`
+- ensure the environment uses Python 3.12
+
+
+
+## Executing Experiments
+### APRNN
+```
+uv run test_aprnn.py --net-id 0
+```
+You can switch the network by changing the `--net-id` argument. We currently support the following networks:
+- net-id 0: mnist f1
+- net-id 1: mnist f2
+
+\# perturbed dimensions is already set to (5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20) in the code. You can change it by modifying the `ndims_list` variable in `test_prorepair.py`.
+
+### ProRepair
+```
+uv run test_prorepair.py --exe-id 0
+```
+You can switch the experiment by changing the `--exe-id` argument. We currently support the following experiments:
+- exe-id 0: (mnist f1, nonzero)
+- exe-id 1: (mnist f1, all)
+- exe-id 2: (mnist f2, nonzero)
+- exe-id 3: (mnist f2, all)
+
+where (model_name, pick) respectively corresponds to the model and the type of perturbation. As described in the paper, we execute the experiments with different numbers of perturbed dimensions (\#DIM) and different numbers of perturbed boxes (\#P). `nonzero` and `all` respectively correspond to the two types of perturbations. The perturbed dimensions are already set to (5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20) in the code. You can change it by modifying the `ndims_list` variable in `test_prorepair.py`. The number of perturbed boxes is already set to (1, 2, 3, 4, 5, 6, 8, 10, 12, 14) in the code. You can change it by modifying the `N_list` variable in `test_prorepair.py`.
+
+### PREPARED, LLR (last layer repair)
+For PREPARED:
+```
+uv run test_prepared.py --exe-id 0
+```
+For LLR (last layer repair):
+```
+uv run test_lastlayer.py --exe-id 0
+```
+You can switch the experiment by changing the `--exe-id` argument. We currently support the following experiments:
+- exe-id 0: (mnist-f1, nonzero)
+- exe-id 1: (mnist-f1, all)
+- exe-id 2: (mnist-f2, nonzero)
+- exe-id 3: (mnist-f2, all)
+- exe-id 4: (cifar-c, all)
+- exe-id 5: (gtsrb-c, all)
+
+where (model_name, pick) respectively corresponds to the model and the type of perturbation. As "ProRepair" experiments, we already set the perturbed dimensions to (5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20) in the code. You can change it by modifying the `ndims_list` variable in `test_prepared.py`. The number of perturbed boxes is already set to (1, 2, 3, 4, 5, 6, 8, 10, 12) for "mnist-f1" and "mnist-f2", (12, 14, 16, 18, 20) for "cifar-c", and (4, 6, 8, 10, 12) for "gtsrb-c" in the code. You can change it by modifying the `N_list` variable in `test_prepared.py`.
+
+### MULAR (our method)
+```
+uv run test.py --exe-id 0
+```
+
+
+## Project Structure
+```
+sabre/
+ ├─ test.py    # Entry point for MULAR experiments
+ ├─ test_lastlayer.py    # Entry point for LLR experiments
+ ├─ test_prepared.py    # Entry point for PREPARED experiments
+ ├─ test_prorepair.py    # Entry point for ProRepair experiments
+ ├─ test_aprnn.py    # Entry point for APRNN experiments
+ ├─ repair/    # Repair modules of MULAR
+ ├─ LastLayerRepair/    # Repair modules of LLR
+ ├─ PREPARED/    # Repair modules of PREPARED
+ ├─ ProRepair/    # Repair modules of ProRepair
+ ├─ network_bound/    # Approximated bounding modules
+ ├─ dual_network/    # Helper modules for bounding
+ ├─ LPsolver/    # LP solver modules for repair optimization
+ ├─ input_space/    # Construct input properties for repair tasks
+ ├─ pyproject.toml    # Project dependencies
+ ├─ README.md
+ └─ (others)/  # Other modules and files, except main components above
+```
