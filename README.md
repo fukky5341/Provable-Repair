@@ -3,7 +3,7 @@
 ## Table of Contents
 - [Installation Guide](#installation-guide)
 - [Executing Experiments](#executing-experiments)
-- 
+- [Project Structure](#project-structure)
 
 ## Installation Guide
 ### 1. [repository](https://anonymous.4open.science/r/Provable-Repair-2682) is in here. Clone it to your local machine.
