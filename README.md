@@ -6,7 +6,10 @@
 - [Project Structure](#project-structure)
 
 ## Installation Guide
-### 1. [repository](https://anonymous.4open.science/r/Provable-Repair-2682) is in here. Clone it to your local machine.
+### 1. Clone the repository
+
+[repository](https://anonymous.4open.science/r/Provable-Repair-2682) is in here. Clone it to your local machine.
+
 
 ### 2. Install Gurobi (solver)
 
